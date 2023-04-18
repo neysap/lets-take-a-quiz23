@@ -8,14 +8,27 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <h1>Code Quiz</h1>
-    <div id="question-container">
+  
+  
+  <h1>JavaScript Quiz</h1>
+  <div id="quiz">
+    <h2 id="countdown">Time: <span id="timer">20</span> seconds</h2>
+    <div id="question"></div>
+    <div id="choices"></div>
+    <button id="start">Start Quiz</button>
+  </div>
+  <div id="end">
+    <h2>All done!</h2>
+    <p>Your final score is <span id="score"></span>.</p>
+    <form>
+      <label for="initials">Enter initials:</label>
+      <input type="text" id="initials" name="initials">
+      <button id="submit">Submit</button>
+    </form>
+  </div>
 
-    </div>
-    <button id="start-button">Start Quiz!</button>
-    <div id="result-container">
 
-    </div>
+
     <script src="assets/js/script.js"></script>
 </body>
 </html>
