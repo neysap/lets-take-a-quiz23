@@ -1,3 +1,8 @@
+var initialsInput = document.getElementById("initials");
+var scoreDisplay = document.getElementById("score");
+var savedNameDisplay = document.getElementById("saved-name");
+var savedScoreDisplay = document.getElementById("saved-score");
+
 
 var questions = [
   {
@@ -20,18 +25,22 @@ var questions = [
     choices: ["html", "css", "js"],
     answer: "js"
   },
-  
+  {
+    question: "Who designed Java Script",
+    choices: ["Guido van Rossum", "Brendan Eich", "Rasmus Lerdorf"],
+    answer: "Brendan Eich"
+  },
 ];
 
-// Define variables
+//variables
 var currentQuestion = 0;
 var score = 0;
 var timeLeft = 20;
-var deductTime= 1
+var deductTime= 2;
 var timer;
 
 
-// Define functions
+// functions
 
 function displayQuestion() {
   var questionEl = document.getElementById("question");
@@ -48,6 +57,25 @@ function displayQuestion() {
   }
 }
 
+var startBtn = document.getElementById("start");
+startBtn.addEventListener("click", function () {
+  startBtn.style.display = "none";
+});
+
+function endGame() {
+  clearInterval(timer);
+  var quizEl = document.getElementById("quiz");
+  quizEl.style.display = "none";
+  var endEl = document.getElementById("end");
+  endEl.style.display = "block";
+  // var saveEl = document.getElementById("save");
+  // saveEl.style.display = "block";
+  var scoreEl = document.getElementById("score");
+  scoreEl.textContent = score;
+  var submitBtn = document.getElementById("submit");
+  submitBtn.onclick = saveScore;
+}
+
 function checkAnswer(event) {
   var selectedAnswer = event.target.textContent;
   var question = questions[currentQuestion];
@@ -59,57 +87,28 @@ function checkAnswer(event) {
   currentQuestion++;
   if (currentQuestion === questions.length) {
     endGame();
-  } else {
+  } 
+  else {
     displayQuestion();
   }
 }
 
 
-function endGame() {
-  clearInterval(timer);
-  var quizEl = document.getElementById("quiz");
-  quizEl.style.display = "none";
-  var endEl = document.getElementById("end");
-  endEl.style.display = "block";
-  var scoreEl = document.getElementById("score");
-  scoreEl.textContent = score;
-  var submitBtn = document.getElementById("submit");
-  submitBtn.onclick = saveScore;
-}
+var submitButton = document.getElementById("submit");
+submitButton.addEventListener("click", saveScore);
 
 function saveScore(event) {
-  event.preventDefault();
-  var initials = document.getElementById("initials").value;
-  var scoreData = {
-    initials: initials,
-    score: score
-  };
-  
-  var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-  highScores.push(scoreData);
-  highScores.sort(function(a, b) {
-    return b.score - a.score;
-  });
-  highScores = highScores.slice(0, 10);
-  localStorage.setItem("highScores", JSON.stringify(highScores));
-  
+  event.preventDefault(); 
+  var initials = initialsInput.value;
+  var score = scoreDisplay.textContent;
+  localStorage.setItem("score", score);
+  localStorage.setItem("initials", initials);
+  savedNameDisplay.textContent = initials;
+  savedScoreDisplay.textContent = score;
 }
-
-function startTimer() {
-  timer = setInterval(function() {
-    timeLeft--;
-    var timeId = document.getElementById("timer");
-    timeId.textContent = timeLeft;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      endGame();
-    }
-  }, 1000);
-}
-
+  
 // Start quiz when start button is clicked
 var startBtn = document.getElementById("start");
-
 startBtn.onclick = function countdown() {
    displayQuestion();
   timeLeft;
@@ -122,7 +121,12 @@ startBtn.onclick = function countdown() {
       } else if (timeLeft === 1) {
         timerEl.textContent = timeLeft + ' second remaining';
         timeLeft--;
-      } else {
+      } 
+      else if (timeLeft === 0) {
+        endGame()
+      }
+      
+      else {
         timerEl.textContent = '';
         clearInterval(timeInterval);
       }
@@ -130,8 +134,6 @@ startBtn.onclick = function countdown() {
     
   }
 
-
-countdown();
 
 
 

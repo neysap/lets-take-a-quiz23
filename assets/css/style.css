@@ -1,7 +1,6 @@
 *{
 background-color: rgb(26, 22, 22);
 
-
 }
 
 
@@ -102,8 +101,10 @@ h1 {
     background-color: #3e8e41;
   }
 
-  h2, p, label {
+  h2, p, form {
 
-    color: burlywood
+    color: burlywood;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
   }
   
